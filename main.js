@@ -1,6 +1,9 @@
 //instead of script tag in body, could put in head and add this:
 //document.addEventListener('DOMContentLoaded', ()=>{})
-
+//ideas:
+//rebuild in react with components and state
+//style to be a slime clearing game?
+//aliens? space? with crazy physics?
 const grid = document.querySelector(".grid");
 const width = 8;
 let score = 0;
@@ -14,13 +17,17 @@ const colours = [
   "violet",
 ];
 
-//build the game board:
+//build the game board: ----------------
+
+function randomColourGenerator() {
+  return Math.floor(Math.random() * colours.length);
+}
 function buildBoard() {
   for (let i = 0; i < width * width; i++) {
     const square = document.createElement("div");
     square.setAttribute("draggable", true);
     square.setAttribute("id", i);
-    let randomColour = Math.floor(Math.random() * colours.length);
+    let randomColour = randomColourGenerator();
     square.style.backgroundColor = colours[randomColour];
     grid.appendChild(square);
     squares.push(square);
@@ -56,7 +63,7 @@ squares.forEach((square) => {
   square.addEventListener("dragend", dragEnd);
 });
 
-//functions called upon these events
+//functions called upon these events-----------------
 function dragStart() {
   currentColour = this.style.backgroundColor;
   currentSquareId = parseInt(this.id);
@@ -102,16 +109,33 @@ function dragEnd() {
   } else {
     squares[currentSquareId].style.backgroundColor = currentColour;
   }
-  //----------------------------------
 
-  //-------check matches functionality-------
+  //-------check matches functionality THREE -------
 }
 function checkRowForThree() {
   for (i = 0; i < 61; i++) {
     let row = [i, i + 1, i + 2];
     let chosenColour = squares[i].style.backgroundColor;
     const isBlank = squares[i].style.backgroundColor === "";
-
+    const nonValidIndex = [
+      6,
+      7,
+      14,
+      15,
+      22,
+      23,
+      30,
+      31,
+      38,
+      39,
+      46,
+      47,
+      54,
+      55,
+    ];
+    if (nonValidIndex.includes(i)) {
+      continue;
+    }
     if (
       row.every(
         (index) =>
@@ -127,6 +151,7 @@ function checkRowForThree() {
 }
 
 function checkColumnForThree() {
+  //up to 47, the size of the grid
   for (i = 0; i < 47; i++) {
     let column = [i, i + width, i + width * 2];
     let chosenColour = squares[i].style.backgroundColor;
@@ -146,7 +171,96 @@ function checkColumnForThree() {
   }
 }
 
+//-------------check matches functionality FOUR -------------
+
+function checkRowForFour() {
+  for (i = 0; i < 60; i++) {
+    let row = [i, i + 1, i + 2, i + 3];
+    let chosenColour = squares[i].style.backgroundColor;
+    const isBlank = squares[i].style.backgroundColor === "";
+    const nonValidIndex = [
+      5,
+      6,
+      7,
+      14,
+      15,
+      21,
+      22,
+      23,
+      29,
+      30,
+      31,
+      37,
+      38,
+      39,
+      45,
+      46,
+      47,
+      53,
+      54,
+      55,
+    ];
+    if (nonValidIndex.includes(i)) {
+      continue;
+    }
+    if (
+      row.every(
+        (index) =>
+          squares[index].style.backgroundColor === chosenColour && !isBlank
+      )
+    ) {
+      score += 4;
+      row.forEach((index) => {
+        squares[index].style.backgroundColor = "";
+      });
+    }
+  }
+}
+
+function checkColumnForFour() {
+  //up to 47, the size of the grid
+  for (i = 0; i < 47; i++) {
+    let column = [i, i + width, i + width * 2, i + width * 3];
+    let chosenColour = squares[i].style.backgroundColor;
+    const isBlank = squares[i].style.backgroundColor === "";
+
+    if (
+      column.every(
+        (index) =>
+          squares[index].style.backgroundColor === chosenColour && !isBlank
+      )
+    ) {
+      score += 4;
+      column.forEach((index) => {
+        squares[index].style.backgroundColor = "";
+      });
+    }
+  }
+}
+
+//-----------move down blocks & regenerate -------------
+//lower blocks when some are cleared
+function moveDown() {
+  for (i = 0; i < 55; i++) {
+    if (squares[i + width].style.backgroundColor === "") {
+      squares[i + width].style.backgroundColor =
+        squares[i].style.backgroundColor;
+      squares[i].style.backgroundColor = "";
+      const firstRow = [0, 1, 2, 3, 4, 5, 6, 7];
+      const isFirstRow = firstRow.includes(i);
+      if (isFirstRow && squares[i].style.backgroundColor === "") {
+        let randomColour = randomColourGenerator();
+        squares[i].style.backgroundColor = colours[randomColour];
+      }
+    }
+  }
+}
+
+// -------------------------------------------------
 window.setInterval(function () {
+  checkRowForFour();
+  checkColumnForFour();
   checkRowForThree();
   checkColumnForThree();
-}, 1000);
+  moveDown();
+}, 500);
