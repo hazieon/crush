@@ -7,8 +7,6 @@
 const grid = document.querySelector(".grid");
 const scoreBoard = document.querySelector("#scoreBoard");
 const startButton = document.querySelector("#startButton");
-const stopButton = document.querySelector("#stopButton");
-
 const width = 8;
 let score = 0;
 const squares = [];
@@ -71,7 +69,6 @@ squares.forEach((square) => {
 });
 
 startButton.addEventListener("click", startGame);
-stopButton.addEventListener("click", stopGame);
 
 //functions called upon these events-----------------
 function dragStart() {
@@ -194,6 +191,7 @@ function checkRowForFour() {
       5,
       6,
       7,
+      13,
       14,
       15,
       21,
@@ -232,6 +230,7 @@ function checkRowForFour() {
 
 function checkColumnForFour() {
   //up to 47, the size of the grid
+
   for (i = 0; i < 47; i++) {
     let column = [i, i + width, i + width * 2, i + width * 3];
     let chosenColour = squares[i].style.backgroundColor;
@@ -273,17 +272,14 @@ function moveDown() {
 // -------------------------------------------------
 
 function startGame() {
-  timerId = setInterval(() => {
+  timerId = setInterval(function () {
     checkRowForFour();
     checkColumnForFour();
     checkRowForThree();
     checkColumnForThree();
     moveDown();
-    return timerId;
-  }, 600);
-}
-
-function stopGame() {
-  console.log(timerId);
-  clearInterval(timerId);
+  }, 800);
+  // if (score > 100) {
+  //   clearInterval(timerId);
+  // }
 }
