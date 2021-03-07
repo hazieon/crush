@@ -5,9 +5,16 @@
 //style to be a slime clearing game?
 //aliens? space? with crazy physics?
 const grid = document.querySelector(".grid");
+const scoreBoard = document.querySelector("#scoreBoard");
+const startButton = document.querySelector("#startButton");
+const stopButton = document.querySelector("#stopButton");
+
 const width = 8;
 let score = 0;
 const squares = [];
+//colours array, alternatively can use images, 70x70px
+//url(images/item.png)
+//replace backgroundColour with backgroundImage
 const colours = [
   "red",
   "rgb(254, 255, 168)",
@@ -62,6 +69,9 @@ squares.forEach((square) => {
 squares.forEach((square) => {
   square.addEventListener("dragend", dragEnd);
 });
+
+startButton.addEventListener("click", startGame);
+stopButton.addEventListener("click", stopGame);
 
 //functions called upon these events-----------------
 function dragStart() {
@@ -143,6 +153,7 @@ function checkRowForThree() {
       )
     ) {
       score += 3;
+      scoreBoard.innerHTML = score;
       row.forEach((index) => {
         squares[index].style.backgroundColor = "";
       });
@@ -164,6 +175,7 @@ function checkColumnForThree() {
       )
     ) {
       score += 3;
+      scoreBoard.innerHTML = score;
       column.forEach((index) => {
         squares[index].style.backgroundColor = "";
       });
@@ -210,6 +222,7 @@ function checkRowForFour() {
       )
     ) {
       score += 4;
+      scoreBoard.innerHTML = score;
       row.forEach((index) => {
         squares[index].style.backgroundColor = "";
       });
@@ -231,6 +244,7 @@ function checkColumnForFour() {
       )
     ) {
       score += 4;
+      scoreBoard.innerHTML = score;
       column.forEach((index) => {
         squares[index].style.backgroundColor = "";
       });
@@ -257,10 +271,19 @@ function moveDown() {
 }
 
 // -------------------------------------------------
-window.setInterval(function () {
-  checkRowForFour();
-  checkColumnForFour();
-  checkRowForThree();
-  checkColumnForThree();
-  moveDown();
-}, 500);
+
+function startGame() {
+  timerId = setInterval(() => {
+    checkRowForFour();
+    checkColumnForFour();
+    checkRowForThree();
+    checkColumnForThree();
+    moveDown();
+    return timerId;
+  }, 600);
+}
+
+function stopGame() {
+  console.log(timerId);
+  clearInterval(timerId);
+}
