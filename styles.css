@@ -3,10 +3,10 @@
   width: 560px;
   display: flex;
   flex-wrap: wrap;
-  background-color: rgb(160, 149, 255);
 }
 
 .grid div {
   height: 70px;
   width: 70px;
+  color: rgb(254, 255, 168);
 }

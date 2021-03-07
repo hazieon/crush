@@ -3,6 +3,7 @@
 
 const grid = document.querySelector(".grid");
 const width = 8;
+let score = 0;
 const squares = [];
 const colours = [
   "red",
@@ -83,4 +84,69 @@ function dragDrop() {
 
 function dragEnd() {
   console.log(this.id, "dragend");
+
+  //-------valid move functionality-------
+  let validMoves = [
+    currentSquareId - 1,
+    currentSquareId - width,
+    currentSquareId + 1,
+    currentSquareId + width,
+  ];
+  let validMove = validMoves.includes(replacedSquareId);
+
+  if (replacedSquareId && validMove) {
+    replacedSquareId = null;
+  } else if (replacedSquareId && !validMove) {
+    squares[replacedSquareId].style.backgroundColor = replacedColour;
+    squares[currentSquareId].style.backgroundColor = currentColour;
+  } else {
+    squares[currentSquareId].style.backgroundColor = currentColour;
+  }
+  //----------------------------------
+
+  //-------check matches functionality-------
 }
+function checkRowForThree() {
+  for (i = 0; i < 61; i++) {
+    let row = [i, i + 1, i + 2];
+    let chosenColour = squares[i].style.backgroundColor;
+    const isBlank = squares[i].style.backgroundColor === "";
+
+    if (
+      row.every(
+        (index) =>
+          squares[index].style.backgroundColor === chosenColour && !isBlank
+      )
+    ) {
+      score += 3;
+      row.forEach((index) => {
+        squares[index].style.backgroundColor = "";
+      });
+    }
+  }
+}
+
+function checkColumnForThree() {
+  for (i = 0; i < 47; i++) {
+    let column = [i, i + width, i + width * 2];
+    let chosenColour = squares[i].style.backgroundColor;
+    const isBlank = squares[i].style.backgroundColor === "";
+
+    if (
+      column.every(
+        (index) =>
+          squares[index].style.backgroundColor === chosenColour && !isBlank
+      )
+    ) {
+      score += 3;
+      column.forEach((index) => {
+        squares[index].style.backgroundColor = "";
+      });
+    }
+  }
+}
+
+window.setInterval(function () {
+  checkRowForThree();
+  checkColumnForThree();
+}, 1000);
