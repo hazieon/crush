@@ -3,10 +3,6 @@
 **Candy crush style matching block busting game using vanilla JavaScript, HTML and CSS.**      
 A rewarding project using functions, loops, array methods, and DOM manipulation to create drag and drop functionality plus animations.
 
-### Tutorial courtesy of Ania Kubow 
-Link: https://youtu.be/XD5sZWxwJUk    
-Ania Kubow's github: https://github.com/kubowania
-
 ### How to play:
 1. Clone this repository to your local machine
 2. Open the HTML file in a browser using the file path
@@ -20,3 +16,7 @@ Ania Kubow's github: https://github.com/kubowania
 - Images for blocks instead of plain colours
 - Refactored and rebuilt for React!
 - Improved stylings and interactivity
+
+### Tutorial courtesy of Ania Kubow 
+Link: https://youtu.be/XD5sZWxwJUk    
+Ania Kubow's github: https://github.com/kubowania
