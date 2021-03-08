@@ -1,6 +1,6 @@
 # Cube Crusher
 
-**Candy crush style matching block busting game using vanilla JavaScript, HTML and CSS.**
+**Candy crush style matching block busting game using vanilla JavaScript, HTML and CSS.**      
 A rewarding project using functions, loops, array methods, and DOM manipulation to create drag and drop functionality plus animations.
 
 ### Tutorial courtesy of Ania Kubow 
