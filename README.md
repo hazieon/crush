@@ -4,7 +4,7 @@
 A rewarding project using functions, loops, array methods, and DOM manipulation to create drag and drop functionality plus animations.
 
 ### Tutorial courtesy of Ania Kubow 
-Link: https://youtu.be/XD5sZWxwJUk
+Link: https://youtu.be/XD5sZWxwJUk    
 Ania Kubow's github: https://github.com/kubowania
 
 ### How to play:
