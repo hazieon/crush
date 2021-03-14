@@ -27,6 +27,7 @@ const colours = [
 function randomColourGenerator() {
   return Math.floor(Math.random() * colours.length);
 }
+
 function buildBoard() {
   for (let i = 0; i < width * width; i++) {
     const square = document.createElement("div");
@@ -82,7 +83,7 @@ function dragEnter(e) {
   e.preventDefault();
 }
 function dragLeave() {
-  this.style.backgroundColor = "";
+  // this.style.backgroundColor = "";
 }
 function dragDrop() {
   replacedColour = this.style.backgroundColor;
