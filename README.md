@@ -4,7 +4,7 @@
 A rewarding project using functions, loops, array methods, and DOM manipulation to create drag and drop functionality plus animations.
 
 **Try out the game here: https://cubecrusher.netlify.app/**
-
+(pc only currently)
 
 ### How to play:
 1. Clone this repository to your local machine
